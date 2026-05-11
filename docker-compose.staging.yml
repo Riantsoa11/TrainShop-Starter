@@ -1,0 +1,30 @@
+services:
+  api:
+    image: trainshop-api:1.2.0
+    container_name: trainshop-api-staging
+    ports:
+      - "3001:3000"
+    env_file:
+      - .env.staging
+    volumes:
+      - ./logs/staging:/app/logs
+    depends_on:
+      - db
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  db:
+    image: postgres:16-alpine
+    container_name: trainshop-db-staging
+    environment:
+      POSTGRES_USER: staging
+      POSTGRES_PASSWORD: staging
+      POSTGRES_DB: trainshop
+    volumes:
+      - staging_db_data:/var/lib/postgresql/data
+
+volumes:
+  staging_db_data:
