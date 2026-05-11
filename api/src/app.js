@@ -7,6 +7,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get("/about", (req, res) => {
+  res.json({
+    project: "TrainShop Starter",
+    module: "DevOps",
+    objective: "Créer une CI GitHub Actions"
+  });
+});
+
 app.get('/', (req, res) => {
   res.json({
     message: 'Bienvenue sur TrainShop Starter',
