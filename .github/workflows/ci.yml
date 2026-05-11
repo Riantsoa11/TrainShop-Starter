@@ -26,6 +26,10 @@ jobs:
         working-directory: api
         run: npm install
 
+      - name: Vérifier la qualité du code
+        working-directory: api
+        run: npm run lint
+
       - name: Lancer les tests API
         working-directory: api
         run: npm test

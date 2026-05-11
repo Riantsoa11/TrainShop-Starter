@@ -82,10 +82,9 @@ app.post('/products', async (req, res) => {
   try {
     const { name, description, price_cents, stock } = req.body;
 
-    if (!name || !description || !price_cents) {
+    if (!name || !description || price_cents <= 0 || stock < 0) {
       return res.status(400).json({
-        error: 'name, description et price_cents sont obligatoires'
-      });
+        error:'Produit invalide'});
     }
 
     const result = await pool.query(
