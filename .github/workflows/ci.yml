@@ -48,3 +48,27 @@ jobs:
 
       - name: Build image Frontend
         run: docker build -t trainshop-frontend ./frontend
+
+      - name: Lancer le conteneur API
+        run: docker run -d --name trainshop-api -p 3000:3000 trainshop-api
+
+      - name: Attendre le démarrage de l’API
+        run: sleep 10
+
+      - name: Afficher les conteneurs Docker
+        run: docker ps -a
+
+      - name: Vérifier /health
+        run: curl -f http://localhost:3000/health
+
+      - name: Afficher les logs API
+        if: always()
+        run: docker logs trainshop-api
+
+      - name: Afficher les stats Docker
+        if: always()
+        run: docker stats --no-stream
+
+      - name: Nettoyer le conteneur
+        if: always()
+        run: docker rm -f trainshop-api
